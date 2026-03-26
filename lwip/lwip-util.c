@@ -34,6 +34,7 @@
 #include <netif/hurdethif.h>
 #include <netif/hurdtunif.h>
 #include <netif/hurdloopif.h>
+#include <netif/hurdwgif.h>
 
 /*
  * Detect the proper module for the given device name
@@ -54,6 +55,8 @@ create_netif_state (char *name, struct ifcommon *ifc)
 
   if (strncmp (base_name, "tun", 3) == 0)
     ifc->init = hurdtunif_device_init;
+  else if (strncmp (base_name, "wg", 2) == 0)
+    ifc->init = hurdwgif_device_init;
   else
     ifc->init = hurdethif_device_init;
 

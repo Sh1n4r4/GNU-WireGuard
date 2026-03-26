@@ -38,6 +38,7 @@
 
 #include <netif/hurdethif.h>
 #include <netif/hurdtunif.h>
+#include <netif/hurdwgif.h>
 #include "startup.h"
 #include "options.h"
 
@@ -211,6 +212,7 @@ main (int argc, char **argv)
   /* Init the device modules */
   hurdethif_module_init ();
   hurdtunif_module_init ();
+  hurdwgif_module_init ();
 
   /* Parse options.  When successful, this configures the interfaces
      before returning */

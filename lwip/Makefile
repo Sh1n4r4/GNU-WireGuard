@@ -22,14 +22,14 @@ PORTDIR = $(srcdir)/port
 
 SRCS		= main.c io-ops.c socket-ops.c pfinet-ops.c iioctl-ops.c port-objs.c \
 		  startup-ops.c options.c lwip-util.c startup.c
-IFSRCS		= ifcommon.c hurdethif.c hurdloopif.c hurdtunif.c
+IFSRCS		= ifcommon.c hurdethif.c hurdloopif.c hurdtunif.c hurdwgif.c wg-crypto.c
 MIGSRCS		= ioServer.c socketServer.c pfinetServer.c iioctlServer.c \
 		  startup_notifyServer.c rioctlServer.c
 OBJS		= $(patsubst %.S,%.o,$(patsubst %.c,%.o,\
 		  $(SRCS) $(IFSRCS) $(MIGSRCS)))
 
 HURDLIBS = trivfs fshelp ports ihash shouldbeinlibc iohelp
-LDLIBS = -lpthread $(liblwip_LIBS)
+LDLIBS = -lpthread $(liblwip_LIBS) $(libgcrypt_LIBS)
 
 target = lwip
 
@@ -37,7 +37,7 @@ include ../Makeconf
 
 vpath %.c $(PORTDIR) $(PORTDIR)/netif
 
-CFLAGS += -I$(PORTDIR)/include $(liblwip_CFLAGS)
+CFLAGS += -I$(PORTDIR)/include $(liblwip_CFLAGS) $(libgcrypt_CFLAGS)
 
 MIGCOMSFLAGS += -prefix lwip_
 mig-sheader-prefix = lwip_
